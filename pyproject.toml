@@ -1,0 +1,71 @@
+[tool.black]
+line-length = 90
+target-version = ['py39']
+
+[tool.isort]
+line_length = 90
+py_version = 39
+profile = "black"
+
+[tool.mypy]
+python_version = 3.9
+exclude = []
+ignore_missing_imports = true
+
+[tool.pyright]
+pythonVersion = "3.9"
+typeCheckingMode = "basic"
+include = ["src", "tests", "app"]
+exclude = [
+    "**/__pycache__",
+]
+ignore = []
+pythonPlatform = "Linux"
+executionEnvironments = []
+# enable subset of "strict"
+reportMissingImports = true
+reportMissingTypeStubs = true
+reportDuplicateImport = true
+reportInvalidStubStatement = true
+reportOverlappingOverload = true
+reportPropertyTypeMismatch = true
+reportUntypedClassDecorator = true
+reportUntypedFunctionDecorator = true
+reportUntypedNamedTuple = true
+
+# project-specific
+reportGeneralTypeIssues = false
+
+[tool.ruff]
+line-length = 90
+target-version = "py39"
+select = ["ALL"]
+ignore = [
+    "COM812",
+    "PGH003",
+    "PLR2004", "PLR0913",
+    "PLW2901",
+    "W292",
+    "FA",
+    "TID252",
+    "S101", "S311",
+    "ANN101", "ANN102",
+    "RET504",
+    "D",
+    "DTZ",
+    "C416",
+    "E731",
+    "EXE002"
+]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.pytest.ini_options]
+log_cli = true
+log_cli_level = "DEBUG"
+log_cli_format = "%(levelname)-10.10s %(asctime)s [%(name)s][%(module)s:%(lineno)d] %(message)s"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+env = [
+    "DIBI_FORB_EXPORTER_TEST_CFG=./tests/config/config.yaml"
+]
