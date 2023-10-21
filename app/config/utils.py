@@ -55,13 +55,12 @@ async def subprocess_with_sox(save_file_path):
     )
     stdout, stderr = await proc.communicate()
 
-    print(stderr)
-
     sample_rate, duration = None, None
     if stdout:
         response = stdout.decode()
+        print(response)
         sample_rate_pattern = r"Sample Rate\s+:\s(\d+)"
-        duration_pattern = r"Duration\s+:\s(\d+)"
+        duration_pattern = r"Duration\s+:\s+(\d+:\d+:\d+\.\d+)"
 
         sample_rate_str = re.search(sample_rate_pattern, response)
         if sample_rate_str is None:
@@ -77,6 +76,8 @@ async def subprocess_with_sox(save_file_path):
                 detail="Not found Duration when dissecting .WAV file",
             )
         duration = duration_str.group(1)
+        hours, minutes, seconds = map(float, duration.split(':'))
+        duration = hours * 3600 + minutes * 60 + seconds
     if stderr:
         raise HTTPException(
             status_code=500,
